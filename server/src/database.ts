@@ -71,9 +71,32 @@ export function initDatabase() {
       FOREIGN KEY (user_id) REFERENCES users(id)
     );
 
+    CREATE TABLE IF NOT EXISTS task_templates (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      name TEXT NOT NULL,
+      description TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS task_template_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      template_id INTEGER NOT NULL,
+      task_name TEXT NOT NULL,
+      hours REAL NOT NULL,
+      project_id INTEGER,
+      description TEXT,
+      sort_order INTEGER DEFAULT 0,
+      FOREIGN KEY (template_id) REFERENCES task_templates(id) ON DELETE CASCADE
+    );
+
     CREATE INDEX IF NOT EXISTS idx_time_entries_user_date ON time_entries(user_id, entry_date);
     CREATE INDEX IF NOT EXISTS idx_time_entries_status ON time_entries(status);
     CREATE INDEX IF NOT EXISTS idx_notifications_user ON notifications(user_id, is_read);
+    CREATE INDEX IF NOT EXISTS idx_task_templates_user ON task_templates(user_id);
+    CREATE INDEX IF NOT EXISTS idx_task_template_items_template ON task_template_items(template_id);
   `);
 
   console.log('Database initialized successfully');

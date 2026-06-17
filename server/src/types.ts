@@ -61,6 +61,30 @@ export interface Notification {
   created_at: string;
 }
 
+export interface TaskTemplateItem {
+  id: number;
+  template_id: number;
+  task_name: string;
+  hours: number;
+  project_id?: number;
+  description?: string;
+  sort_order: number;
+}
+
+export interface TaskTemplate {
+  id: number;
+  user_id: number;
+  name: string;
+  description?: string;
+  created_at: string;
+  updated_at: string;
+  items?: TaskTemplateItem[];
+}
+
+export interface TaskTemplateWithItems extends TaskTemplate {
+  items: TaskTemplateItem[];
+}
+
 export interface JwtPayload {
   userId: number;
   username: string;

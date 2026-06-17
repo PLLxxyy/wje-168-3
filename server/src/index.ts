@@ -9,6 +9,7 @@ import approvalRoutes from './routes/approvals';
 import statsRoutes from './routes/stats';
 import notificationRoutes from './routes/notifications';
 import userRoutes from './routes/users';
+import taskTemplateRoutes from './routes/taskTemplates';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -25,6 +26,7 @@ app.use('/api/approvals', approvalRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/task-templates', taskTemplateRoutes);
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
